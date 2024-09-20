@@ -165,7 +165,7 @@ public class PaddingOracleScanRule extends AbstractAppParamPlugin
                 setParameter(msg, paramName, encodedValue);
                 sendAndReceive(msg);
 
-                // If the control test returned an error, then keep going
+                // If the control test returns no error, then keep going
                 if (isPage200(msg)) {
 
                     // Response without any modification
@@ -201,7 +201,7 @@ public class PaddingOracleScanRule extends AbstractAppParamPlugin
                     String emptyValueResponse = getEmptyValueResponse(paramName);
 
                     // Check if changing the last bit produced a result that
-                    // changing the first bit didn't. These results are based
+                    // the control response did not. These results are based
                     // on a list of error strings.
                     for (String pattern : ERROR_PATTERNS) {
 
@@ -262,7 +262,7 @@ public class PaddingOracleScanRule extends AbstractAppParamPlugin
      * short strings, so we are going to solve this by cheating. Basically, check if the string
      * contains any non-ascii characters (&lt;0x20 or &gt;0x7F). The odds of a 4-character encrypted
      * string having at least one character that falls outside of ASCII is almost 100%. We also
-     * ignore any string longer than 16 bytes, since those are generally too short to be encrypted.
+     * ignore any string shorter than 16 bytes, since those are generally too short to be encrypted.
      *
      * @param value the value that need to be checked
      * @return true if it seems to be encrypted
